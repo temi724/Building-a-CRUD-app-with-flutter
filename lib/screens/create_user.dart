@@ -1,5 +1,6 @@
 import 'package:crud_flutter_app/models/employees.dart';
 import 'package:crud_flutter_app/services/employee_service.dart';
+import 'package:crud_flutter_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class CreateUser extends StatefulWidget {
@@ -12,7 +13,7 @@ class CreateUser extends StatefulWidget {
 class _CreateUserState extends State<CreateUser> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _jobCOntroller = TextEditingController();
-  GlobalKey<FormState> _key = GlobalKey();
+  final GlobalKey<FormState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +58,14 @@ class _CreateUserState extends State<CreateUser> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_key.currentState!.validate()) {
                   Profile newProfile = Profile(
                       name: _nameController.text, job: _jobCOntroller.text);
-                  EmployeeService().createEmployee(newProfile);
+                  await EmployeeService().createEmployee(newProfile);
                   ScaffoldMessenger.of(context)
                       .showSnackBar(const SnackBar(content: Text("Saved!")));
-                  // Navigator.pop(context);
+                  Navigator.pushNamed(context, AppRouter.homeView);
                 }
               },
               child: const Text("Create profile"),
