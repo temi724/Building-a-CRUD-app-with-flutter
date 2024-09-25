@@ -2,6 +2,7 @@ import 'package:crud_flutter_app/models/employees.dart';
 import 'package:crud_flutter_app/services/employee_service.dart';
 import 'package:crud_flutter_app/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class EmployeeView extends StatelessWidget {
   const EmployeeView({super.key});
@@ -99,20 +100,88 @@ class EmployeeView extends StatelessWidget {
                         ],
                       )),
                 );
-                //   return ListTile(
-                //     leading: CircleAvatar(
-                //       backgroundImage: ,
-                //     ),
-                //     title: Text(data[index].firstName!),
-                //     subtitle: Text(data[index].email!),
-                //   );
               },
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Skeleton(),
             );
           }
+        },
+      ),
+    );
+  }
+}
+
+class Skeleton extends StatelessWidget {
+  const Skeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Skeletonizer(
+      enabled: true,
+      child: ListView.builder(
+        // scrollDirection: Axis.horizontal,
+        itemCount: 12,
+        itemBuilder: (context, index) {
+          const SizedBox(
+            height: 20,
+          );
+          return GestureDetector(
+            onTap: () {
+              // Navigator.pushNamed(context, AppRouter.singleUser,
+              //     arguments: {"id": data[index].id});
+              // print("Hello ${data[index].id}");
+            },
+            child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.only(right: 8, left: 8, top: 3),
+                height: 90,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: Colors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[500],
+                                shape: BoxShape.circle,
+                                image: const DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage("")))),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Loading text sample",
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "Loading text sample",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey[800],
+                    )
+                  ],
+                )),
+          );
         },
       ),
     );

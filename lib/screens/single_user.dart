@@ -1,8 +1,8 @@
 import 'package:crud_flutter_app/models/employees.dart';
 import 'package:crud_flutter_app/services/employee_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:crud_flutter_app/utils/routes.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SingleUser extends StatefulWidget {
   const SingleUser({super.key});
@@ -25,6 +25,7 @@ class _SingleUserState extends State<SingleUser> {
   void didChangeDependencies() {
     var args = ModalRoute.of(context)!.settings.arguments as Map;
     id = args["id"];
+    // print("my id $id");
 
     super.didChangeDependencies();
   }
@@ -112,9 +113,18 @@ class _SingleUserState extends State<SingleUser> {
                             Text("${user.email}"),
                           ],
                         ),
-                        const Icon(
-                          Icons.edit_outlined,
-                          color: Colors.purple,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, AppRouter.createProfile, arguments: {
+                              "id": "${user.id}",
+                              "name": "${user.firstName}"
+                            });
+                          },
+                          child: const Icon(
+                            Icons.edit_outlined,
+                            color: Colors.purple,
+                          ),
                         )
                       ],
                     ),
@@ -215,6 +225,45 @@ class _SingleUserState extends State<SingleUser> {
                       ],
                     ),
                   ),
+
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                                title: const Text("Delete user?"),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        EmployeeService().deleteEmploye(id);
+
+                                        Navigator.pushNamed(
+                                            context, AppRouter.homeView);
+                                      },
+                                      child: const Text("yes")),
+                                  ElevatedButton(
+                                      onPressed: () {}, child: const Text("No"))
+                                ]);
+                          });
+                    },
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        height: 50,
+                        width: 140,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.purple),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.delete),
+                            Text("Delete profile")
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               );
 

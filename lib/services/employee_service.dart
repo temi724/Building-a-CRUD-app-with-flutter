@@ -63,14 +63,26 @@ class EmployeeService {
     }
   }
 
-  editEmployee() async {
+  Future updateEmployee(Profile profile, int id) async {
+    var response = await http.post(Uri.parse('${baseUrl}users/$id'),
+        body: profile.toJson());
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      // print("${response.body}");
+      return response.body;
+    }
     try {} catch (e) {
       throw Exception(e.toString());
     }
   }
 
-  deleteEmploye() async {
-    try {} catch (e) {
+  Future deleteEmploye(id) async {
+    try {
+      var response = await http.delete(Uri.parse('${baseUrl}users/$id'));
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        // print("${response.body}");
+        return response.body;
+      }
+    } catch (e) {
       throw Exception(e.toString());
     }
   }

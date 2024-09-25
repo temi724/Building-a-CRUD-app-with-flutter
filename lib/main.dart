@@ -1,4 +1,5 @@
 import 'package:crud_flutter_app/Navigation/nav.dart';
+import 'package:crud_flutter_app/screens/create_user.dart';
 
 import 'package:crud_flutter_app/screens/single_user.dart';
 import 'package:crud_flutter_app/utils/routes.dart';
@@ -18,7 +19,8 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         AppRouter.homeView: (context) => const MainNav(),
-        AppRouter.singleUser: (context) => const SingleUser()
+        AppRouter.singleUser: (context) => const SingleUser(),
+        AppRouter.createProfile: (context) => const CreateUser()
       },
     );
   }
