@@ -44,3 +44,19 @@ class ApiResponse {
     support = Support.fromJson(json['support']);
   }
 }
+
+class Profile {
+  String? name;
+  String? job;
+
+  Profile({this.name, this.job});
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = {};
+
+    data['name'] = name;
+    data['job'] = job;
+
+    return data;
+  }
+}

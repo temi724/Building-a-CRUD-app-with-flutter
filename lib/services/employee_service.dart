@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class EmployeeService {
   String baseUrl = "https://reqres.in/api/";
 
-  getEmployee() async {
+  Future getEmployee() async {
     List<Employees> allEmployees = [];
     try {
       var response = await http.get(Uri.parse("${baseUrl}users?per_page=12"));
@@ -50,8 +50,14 @@ class EmployeeService {
   //   }
   // }
 
-  createEmployee() async {
-    try {} catch (e) {
+  createEmployee(Profile profile) async {
+    try {
+      var response =
+          await http.post(Uri.parse('${baseUrl}users'), body: profile.toJson());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return response.body;
+      }
+    } catch (e) {
       throw Exception(e.toString());
     }
   }

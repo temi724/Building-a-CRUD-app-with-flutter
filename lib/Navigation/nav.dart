@@ -1,3 +1,4 @@
+import 'package:crud_flutter_app/screens/create_user.dart';
 import 'package:crud_flutter_app/screens/employee_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,7 +13,7 @@ class MainNav extends StatefulWidget {
 class _MainNavState extends State<MainNav> {
   final appScreen = [
     const EmployeeView(),
-    const EmployeeView(),
+    const CreateUser(),
   ];
 
   int _selectedIndex = 0;
@@ -37,9 +38,9 @@ class _MainNavState extends State<MainNav> {
               label: "Home",
               activeIcon: Icon(Icons.home)),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_2_outlined),
+              icon: Icon(Icons.person_add_outlined),
               label: "User",
-              activeIcon: Icon(Icons.person))
+              activeIcon: Icon(Icons.person_add))
         ],
       ),
     );
